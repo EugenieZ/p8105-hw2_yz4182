@@ -1,0 +1,10 @@
+---
+tittle: "p8105 homework 2"
+anthor: Yujin Zhang
+output: github_document
+---
+
+This is a R MARKDOWN file.
+```{r, echo = FALSE, message = FALSE}
+library(tidyverse)
+```
