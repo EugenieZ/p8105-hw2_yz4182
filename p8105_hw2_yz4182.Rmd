@@ -5,6 +5,47 @@ output: github_document
 ---
 
 This is a R MARKDOWN file.
+
 ```{r, echo = FALSE, message = FALSE}
 library(tidyverse)
+library(readxl)
 ```
+
+## Problem 1 read and clean the Mr. Trash Wheel dataset.
+```{r}
+trashwheel_df = 
+  read_excel("./hw_data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", range = "A2:N408") %>% 
+  janitor::clean_names() %>% 
+  drop_na(dumpster)
+trashwheel_df = transform(trashwheel_df, sports_balls = as.integer(sports_balls)) #no idea
+
+precipitation_2018_df =
+  read_excel("./hw_data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", sheet = "2018 Precipitation", range = "A2:B14") %>% 
+  janitor::clean_names() %>%
+  rename(total_precipitation = total) %>% 
+  mutate(year = 2018) %>% 
+  relocate(year)
+
+precipitation_2019_df = 
+  read_excel("./hw_data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", sheet = "2019 Precipitation", range = "A2:B14") %>% 
+  janitor::clean_names() %>%
+  drop_na(total) %>% 
+  rename(total_precipitation = total) %>% 
+  mutate(year = 2019) %>% 
+  relocate(year)
+
+precipitation_df = 
+  left_join(precipitation_2018_df, precipitation_2019_df, by = "month")
+precipitation_df = transform(precipitation_df, month = month.name[month]) # no idea what else solution to combine the df
+```
+
+```{r, echo=FALSE}
+sportsballs_2017_df = filter(trashwheel_df, year == 2017)
+```
+
+The number of observation in trash wheel dataset is`r nrow(trashwheel_df)`, and the number of observation in precipitation dataset is `r nrow(precipitation_2018_df) + nrow(precipitation_2019_df)`. The key variables?
+The total precipitation in 2018 is `r sum(pull(precipitation_2018_df, total_precipitation))`. The median number of sports balls in a dumpster in 2017 is `r median(pull(sportsballs_2017_df, sports_balls))`.
+
+
+
+## Problem 2:
