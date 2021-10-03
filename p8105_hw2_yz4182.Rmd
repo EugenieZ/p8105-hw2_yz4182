@@ -4,7 +4,7 @@ anthor: Yujin Zhang
 output: github_document
 ---
 
-This is a R MARKDOWN file.
+This is a R MARKDOWN file for homework 2.
 
 ```{r, echo = FALSE, message = FALSE}
 library(tidyverse)
@@ -37,7 +37,7 @@ precipitation_2019_df =
 
 precipitation_df = 
   bind_rows(precipitation_2018_df, precipitation_2019_df) %>% 
-  mutate(month = month.name[month]) # no idea what else solution to combine the df
+  mutate(month = month.name[month])
 ```
 
 ```{r, echo=FALSE}
@@ -110,7 +110,7 @@ unemployment_df =
 
 ## Join the three dataset above.
 ```{r}
-join_two_df = left_join(pols_month_df, snp_df, by = c("year" = "year", "month" = "month")) # how to do this with two same column? 
+join_two_df = left_join(pols_month_df, snp_df, by = c("year" = "year", "month" = "month")) 
 join_df = left_join(join_two_df, unemployment_df, by = c("year" = "year", "month" = "month"))
 ```
 The dataset of "pols_month_df" contains 9 variables:`r names(pols_month_df)` and 822 observations with a range from 1947-2015.
@@ -134,6 +134,7 @@ olivia_popl_df =
          childs_first_name == "OLIVIA"
          ) %>% 
   arrange(year_of_birth)
+knitr::kable(olivia_popl_df)
 
 male_popl_df =
   filter(popl_babynames_df,
@@ -141,6 +142,7 @@ male_popl_df =
          rank == 1
          ) %>% 
   arrange(year_of_birth)
+knitr::kable(male_popl_df)
 ```
 
 ```{r}
@@ -150,5 +152,5 @@ malename_2016_df =
          gender == "MALE",
          ethnicity == "white non hispanic",
          )
-ggplot(malename_2016_df, aes(x = rank, y = count)) + geom_point()
+ggplot(malename_2016_df, aes(x = rank, y = count)) + geom_point() + ggtitle("names' rank with numbers of male, white non-hispanic children born in 2016")
 ```
