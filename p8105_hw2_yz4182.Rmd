@@ -16,21 +16,21 @@ library(ggplot2)
 ```{r}
 #read and clean Mr. Trash Wheel dataset
 trashwheel_df = 
-  read_excel("./hw_data/Trash-Wheel-Collection-Totals-7-2021-sept.xlsx", range = "A2:N574") %>% 
+  read_excel("./hw_data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "Mr. Trash Wheel", range = "A2:N534") %>%
   janitor::clean_names() %>% 
   drop_na(dumpster) %>%  # omit rows that don't include dumpster data
   mutate(sports_balls = as.integer(sports_balls))  #round to the nearest integer
 
 # read and clean the precipitation data
 precipitation_2018_df =
-  read_excel("./hw_data/Trash-Wheel-Collection-Totals-7-2021-sept.xlsx", sheet = "2018 Precipitation", range = "A2:B14") %>%
+  read_excel("./hw_data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "2018 Precipitation", range = "A2:B14") %>%
   janitor::clean_names() %>%
   drop_na(total) %>%  # omit rows that don't include data
   mutate(year = 2018) %>%  # add a 'year' variable
   relocate(year)
 
 precipitation_2019_df = 
-  read_excel("./hw_data/Trash-Wheel-Collection-Totals-7-2021-sept.xlsx", sheet = "2019 Precipitation", range = "A2:B14") %>%
+  read_excel("./hw_data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "2019 Precipitation", range = "A2:B14") %>%
   janitor::clean_names() %>%
   drop_na(total) %>%  # omit rows that don't include data
   mutate(year = 2019) %>%  # add a 'year' variable
