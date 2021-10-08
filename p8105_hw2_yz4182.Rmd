@@ -139,7 +139,10 @@ popl_babynames_df =
   mutate(childs_first_name = toupper(childs_first_name)) %>%  # unify the data format
   mutate(ethnicity = tolower(ethnicity)) %>% 
   mutate(gender = tolower(gender)) %>% 
-  distinct(year_of_birth, gender, ethnicity, childs_first_name, .keep_all = TRUE) # remove the duplicated rows
+  mutate(ethnicity = replace(ethnicity, ethnicity == "asian and paci", "asian and pacific islander")) %>% 
+  mutate(ethnicity = replace(ethnicity, ethnicity == "black non hisp", "black non hispanic")) %>%
+  mutate(ethnicity = replace(ethnicity, ethnicity == "white non hisp", "white non hispanic")) %>%
+  distinct() # remove the duplicated rows
 
 # create a table that shows the rank of the female name "Olivia"
 olivia_popl_df =
